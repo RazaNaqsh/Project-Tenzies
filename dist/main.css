@@ -23,12 +23,15 @@ body {
 .App {
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   align-items: center;
   background-color: #f5f5f5;
   border-radius: 10px;
   padding: 1rem;
   max-width: 600px;
-  width: 600px;
+  max-height: 600px;
+  height: 400px;
+  width: 500px;
 }
 
 Header {
@@ -45,4 +48,35 @@ Header {
 
 .Heading-instructions {
   color: #4a4e74;
+}
+
+.Die-container {
+  display: grid;
+  grid-template: auto auto/repeat(5, 50px);
+  gap: 1rem;
+}
+
+.Die-box {
+  background-color: white;
+  height: 50px;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.Die-num {
+  line-height: 2.5;
+}
+
+.btn-roll {
+  background-color: #5035ff;
+  box-shadow: 0px 3.2px 7.68px rgba(0, 0, 0, 0.18);
+  border-radius: 4px;
+  border: none;
+  color: white;
+  padding: 1rem 2rem;
+  font-size: 16px;
+  letter-spacing: 2px;
+  cursor: pointer;
 }/*# sourceMappingURL=main.css.map */

@@ -2,6 +2,8 @@ import Heading from "./components/Heading";
 import { useState } from "react";
 import { nanoid } from "nanoid";
 
+import Die from "./components/Die";
+
 function App() {
 	// make boxes by mapping
 	// display random number
@@ -24,10 +26,14 @@ function App() {
 		}
 		return diceArray;
 	}
-	console.log(dice);
+
+	const DieElements = dice.map((die) => <Die value={die.value} />);
+
 	return (
 		<div className="App">
 			<Heading />
+			<main className="Die-container">{DieElements}</main>
+			<button className="btn-roll">Roll</button>
 		</div>
 	);
 }
