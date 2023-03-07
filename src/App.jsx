@@ -1,11 +1,24 @@
 import Heading from "./components/Heading";
-import { useState } from "react";
+import Die from "./components/Die";
+import { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 
-import Die from "./components/Die";
+import Confetti from "react-confetti";
 
 function App() {
 	const [dice, setDice] = useState(newDiceArray());
+
+	const [tenzie, setTenzie] = useState(false);
+
+	useEffect(() => {
+		const allHeld = dice.every((die) => die.isHeld);
+		const allEqual = dice.every((die, i, arr) => die.value === arr[0].value);
+
+		if (allEqual && allHeld) {
+			setTenzie(true);
+			console.log("win");
+		}
+	}, [dice]);
 
 	function generateNewDie() {
 		const die = {
@@ -25,17 +38,24 @@ function App() {
 	}
 
 	function rollDice() {
-		setDice((oldDice) => {
-			return oldDice.map((die) => (die.isHeld ? die : generateNewDie()));
-		});
+		if (!tenzie) {
+			setDice((oldDice) => {
+				return oldDice.map((die) => (die.isHeld ? die : generateNewDie()));
+			});
+		} else {
+			setDice(newDiceArray());
+			setTenzie(false);
+		}
 	}
 
 	function holdDice(id) {
-		setDice((oldDice) => {
-			return oldDice.map((die) =>
-				die.id === id ? { ...die, isHeld: !die.isHeld } : die
-			);
-		});
+		if (!tenzie) {
+			setDice((oldDice) => {
+				return oldDice.map((die) =>
+					die.id === id ? { ...die, isHeld: !die.isHeld } : die
+				);
+			});
+		}
 	}
 
 	const DieElements = dice.map((die) => (
@@ -49,13 +69,14 @@ function App() {
 
 	return (
 		<div className="App">
+			{tenzie && <Confetti />}
 			<Heading />
 			<main className="Die-container">{DieElements}</main>
 			<button
 				className="btn-roll"
 				onClick={rollDice}
 			>
-				Roll
+				{tenzie ? "New Game" : "Roll"}
 			</button>
 		</div>
 	);
