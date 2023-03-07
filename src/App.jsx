@@ -16,7 +16,7 @@ function App() {
 
 		if (allEqual && allHeld) {
 			setTenzie(true);
-			console.log("win");
+			// console.log("win");
 		}
 	}, [dice]);
 
