@@ -5,16 +5,13 @@ import { nanoid } from "nanoid";
 import Die from "./components/Die";
 
 function App() {
-	// make boxes by mapping
-	// display random number
-	// roll button to display again
-	// hold state inside button
 	const [dice, setDice] = useState(newDiceArray());
 
 	function generateNewDie() {
 		const die = {
 			value: Math.ceil(Math.random() * 6),
 			id: nanoid(),
+			isHeld: false,
 		};
 		return die;
 	}
@@ -27,13 +24,39 @@ function App() {
 		return diceArray;
 	}
 
-	const DieElements = dice.map((die) => <Die value={die.value} />);
+	function rollDice() {
+		setDice(newDiceArray());
+	}
+
+	function holdDice(id) {
+		// console.log(id);
+
+		setDice((oldDice) => {
+			return oldDice.map((die) =>
+				die.id === id ? { ...die, isHeld: !die.isHeld } : die
+			);
+		});
+	}
+
+	const DieElements = dice.map((die) => (
+		<Die
+			key={die.id}
+			value={die.value}
+			isHeld={die.isHeld}
+			hold={() => holdDice(die.id)}
+		/>
+	));
 
 	return (
 		<div className="App">
 			<Heading />
 			<main className="Die-container">{DieElements}</main>
-			<button className="btn-roll">Roll</button>
+			<button
+				className="btn-roll"
+				onClick={rollDice}
+			>
+				Roll
+			</button>
 		</div>
 	);
 }
