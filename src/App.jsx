@@ -25,12 +25,12 @@ function App() {
 	}
 
 	function rollDice() {
-		setDice(newDiceArray());
+		setDice((oldDice) => {
+			return oldDice.map((die) => (die.isHeld ? die : generateNewDie()));
+		});
 	}
 
 	function holdDice(id) {
-		// console.log(id);
-
 		setDice((oldDice) => {
 			return oldDice.map((die) =>
 				die.id === id ? { ...die, isHeld: !die.isHeld } : die
